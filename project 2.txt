@@ -1,0 +1,114 @@
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int correctPin = 1234;
+        int attemptsNumber = 3;
+        int number = 1; // number of 1st trial
+        int choice;
+        double currentBalance = 2500.75;
+        double depositAmount;
+        double withdrawAmount;
+        boolean loginStatus = false;
+        boolean exit = false;
+        int  depositCounter=0;
+        int  withdrawCounter=0;
+        while (number <=attemptsNumber&&!loginStatus) {
+            System.out.print("Enter 4- digit pin:" + " ");
+            int pin = input.nextInt();
+            if (pin == correctPin) {
+                System.out.println("you have successfly login ");
+                System.out.println("Intial balance = 2500.75");
+                loginStatus = true;
+            } else {
+                number++;
+                if(number <=attemptsNumber){
+                    System.out.println("You have entered wrong password,Try again ");
+                }
+
+            }
+
+        }
+        if (loginStatus) {
+
+            exit = false;
+
+
+            do {
+                System.out.println("choose your choice 1 -> 5:");
+                System.out.println("================ATM===================");
+                System.out.println("1. Check Balance ");
+                System.out.println("2. Deposit ");
+                System.out.println("3. Withdraw ");
+                System.out.println("4. Show Account status");
+                System.out.println("5. Exit");
+                System.out.println("========================================");
+                choice = input.nextInt();
+                switch (choice) {
+                    case 1:
+                        System.out.println("Your current Balance: " + currentBalance);
+                        if (currentBalance==0){
+                            System.out.println("Warning 'Warning: Your account is empty");
+                        }
+                        break;
+                    case 2:
+                        System.out.println("What is the Deposit Amount? ");
+                        depositAmount = input.nextDouble();
+                        if (depositAmount > 0) {
+                            currentBalance += depositAmount;
+                            depositCounter++;
+                        } else {
+                            System.out.println("Invalid Amount ");
+                        }
+                        break;
+                    case 3:
+                        System.out.println("What is the Withdraw Amount? ");
+                        withdrawAmount = input.nextDouble();
+                        if (withdrawAmount > 0 && withdrawAmount <= currentBalance) {
+                            currentBalance -= withdrawAmount;
+                            withdrawCounter++;}
+                        else if (withdrawAmount == 0) {
+                            System.out.println("Transaction cancelled");
+                        }
+                        else {
+                            System.out.println("Insufficient balance ");
+                        }
+
+                        break;
+
+                    case 4:
+                        if (currentBalance >= 5000) {
+                            System.out.println("VIP Customer");
+                        } else if (currentBalance > 1000 && currentBalance < 4999.99) {
+                            System.out.println("Regular Customer");
+                        } else {
+                            System.out.println("Low Balance");
+
+                        }
+                        break;
+                    case 5:
+                        System.out.println("Thank you for using out ATM");
+                        exit = true ;
+                        if ((depositCounter+ withdrawCounter)>0){
+                            System.out.println("Total successful Transactions =" + (depositCounter+ withdrawCounter));}
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice ");
+                }
+
+            }
+            while (!exit );
+
+        } else {
+            System.out.println("You have exceed 3 attempts ,you are locked");
+        }
+
+
+    }
+}
+
+
+
+
+
